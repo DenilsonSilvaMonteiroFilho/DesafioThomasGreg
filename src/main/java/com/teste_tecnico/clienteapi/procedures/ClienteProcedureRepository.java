@@ -1,0 +1,25 @@
+package com.teste_tecnico.clienteapi.procedures;
+
+import com.teste_tecnico.clienteapi.entities.Cliente;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
+import java.util.List;
+
+@Repository
+public class ClienteProcedureRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public void removerClientePorProcedure(Long id) {
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("sp_remover_cliente");
+        query.registerStoredProcedureParameter("id", Long.class, ParameterMode.IN);
+        query.setParameter("id", id);
+        query.execute();
+    }
+}
