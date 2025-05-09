@@ -21,7 +21,7 @@ public class Cliente {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String nome;
 
     @NotBlank
     @Email
@@ -42,12 +42,12 @@ public class Cliente {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -66,11 +66,11 @@ public class Cliente {
         this.logotipo = logotipo;
     }
 
-    public List<Logradouro> getLogradouro() {
+    public List<Logradouro> getLogradouros() {
         return logradouros;
     }
 
-    public void setLogradouro(List<Logradouro> logradouros) {
+    public void setLogradouros(List<Logradouro> logradouros) {
         this.logradouros = logradouros;
     }
 }

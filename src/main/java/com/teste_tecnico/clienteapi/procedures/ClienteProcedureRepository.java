@@ -15,6 +15,7 @@ public class ClienteProcedureRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //Usar como base pra criacao de futuras procedures
     public void removerClientePorProcedure(Long id) {
         StoredProcedureQuery query = entityManager
                 .createStoredProcedureQuery("sp_remover_cliente");
