@@ -28,7 +28,8 @@ public class ClienteService {
 
     @Transactional
     public Cliente criarCliente(ClienteRequestDTO dto, MultipartFile logotipo) throws IOException {
-        if (clienteRepository.existsByEmail(dto.getEmail())) {
+        Cliente existente = clienteRepository.findByEmail(dto.getEmail());
+        if (existente!=null) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
 
@@ -47,7 +48,6 @@ public class ClienteService {
                     logradouro.setCidade(logradouroDTO.getCidade());
                     logradouro.setUf(logradouroDTO.getUf());
                     logradouro.setCliente(cliente);
-                    logradouroService.criar(cliente.getId(),logradouroDTO);
                     return logradouro;
                 })
                 .collect(Collectors.toList());
