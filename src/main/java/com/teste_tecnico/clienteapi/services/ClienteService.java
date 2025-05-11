@@ -5,7 +5,6 @@ import com.teste_tecnico.clienteapi.DTOs.ClienteRequestDTO;
 import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.entities.Logradouro;
 import com.teste_tecnico.clienteapi.repositories.ClienteRepository;
-import com.teste_tecnico.clienteapi.repositories.LogradouroRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +18,12 @@ import java.util.stream.Collectors;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
-    private final LogradouroRepository logradouroRepository;
+    private final LogradouroService logradouroService;
 
     public ClienteService(ClienteRepository clienteRepository,
-                          LogradouroRepository logradouroRepository) {
+                          LogradouroService logradouroService) {
         this.clienteRepository = clienteRepository;
-        this.logradouroRepository = logradouroRepository;
+        this.logradouroService = logradouroService;
     }
 
     @Transactional
@@ -48,6 +47,7 @@ public class ClienteService {
                     logradouro.setCidade(logradouroDTO.getCidade());
                     logradouro.setUf(logradouroDTO.getUf());
                     logradouro.setCliente(cliente);
+                    logradouroService.criar(cliente.getId(),logradouroDTO);
                     return logradouro;
                 })
                 .collect(Collectors.toList());
@@ -79,7 +79,11 @@ public class ClienteService {
         dto.setId(cliente.getId());
         dto.setNome(cliente.getNome());
         dto.setEmail(cliente.getEmail());
-        dto.setLogradouros(cliente.getLogradouros());
+        dto.setLogradouros(cliente.getLogradouros().stream()
+                .map(logradouro -> {
+                return logradouroService.toDTO(logradouro);
+                })
+                .collect(Collectors.toList()));
         return dto;
     }
 }

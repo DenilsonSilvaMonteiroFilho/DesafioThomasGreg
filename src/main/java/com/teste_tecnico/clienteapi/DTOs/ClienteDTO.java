@@ -8,7 +8,7 @@ public class ClienteDTO {
     private Long id;
     private String nome;
     private String email;
-    private List<Logradouro> logradouros;
+    private List<LogradouroDTO> logradouros;
 
 
     public Long getId() {
@@ -35,11 +35,11 @@ public class ClienteDTO {
         this.email = email;
     }
 
-    public List<Logradouro> getLogradouros() {
+    public List<LogradouroDTO> getLogradouros() {
         return logradouros;
     }
 
-    public void setLogradouros(List<Logradouro> logradouros) {
+    public void setLogradouros(List<LogradouroDTO> logradouros) {
         this.logradouros = logradouros;
     }
 }
