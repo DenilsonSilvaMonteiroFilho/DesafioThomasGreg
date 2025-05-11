@@ -22,14 +22,18 @@ public class LogradouroService {
         this.clienteRepository = clienteRepository;
     }
 
-    public LogradouroDTO criar(LogradouroDTO dto) {
+    public Cliente addLagradouro(Long idCliente,LogradouroDTO dto) {
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new NoSuchElementException("Cliente não encontrado"));
+
         Logradouro logradouro = new Logradouro();
         logradouro.setEndereco(dto.getEndereco());
         logradouro.setCidade(dto.getCidade());
         logradouro.setUf(dto.getUf());
+        logradouro.setCliente(cliente);
 
-        Logradouro salvo = logradouroRepository.save(logradouro);
-        return toDTO(salvo);
+        cliente.getLogradouros().add(logradouro);
+        return clienteRepository.save(cliente);
     }
 
     public List<LogradouroDTO> listarPorCliente(Long clienteId) {
