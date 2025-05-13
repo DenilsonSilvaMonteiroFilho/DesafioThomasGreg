@@ -1,13 +1,11 @@
 package com.teste_tecnico.clienteapi.procedures;
 
-import com.teste_tecnico.clienteapi.entities.Cliente;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import java.util.List;
 
 @Repository
 public class ClienteProcedureRepository {

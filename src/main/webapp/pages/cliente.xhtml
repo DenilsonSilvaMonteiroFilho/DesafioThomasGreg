@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Clientes</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:commandButton value="Novo Cliente" action="cliente_form.xhtml?faces-redirect=true" />
+        <p:dataTable value="#{clienteBean.clientes}" var="cliente">
+            <p:column headerText="Nome">
+                <h:outputText value="#{cliente.nome}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{cliente.email}" />
+            </p:column>
+            <p:column>
+                <p:commandButton value="Logradouros" action="logradouro_form.xhtml?faces-redirect=true">
+                    <f:setPropertyActionListener target="#{logradouroBean.clienteId}" value="#{cliente.id}" />
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>

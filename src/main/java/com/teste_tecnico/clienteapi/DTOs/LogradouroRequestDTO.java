@@ -1,19 +1,10 @@
 package com.teste_tecnico.clienteapi.DTOs;
 
-public class LogradouroDTO {
+public class LogradouroRequestDTO {
 
-    private Long id;
     private String endereco;
     private String cidade;
     private String uf;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getEndereco() {
         return endereco;

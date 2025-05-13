@@ -1,6 +1,5 @@
 package com.teste_tecnico.clienteapi.DTOs;
 
-import com.teste_tecnico.clienteapi.entities.Logradouro;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
