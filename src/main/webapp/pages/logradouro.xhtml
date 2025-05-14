@@ -8,11 +8,11 @@
     <title>Logradouros</title>
 </h:head>
 <h:form>
-    <p:panel header="Logradouros do Cliente #{logradouroBean.clienteId}">
+    <p:panel header="Logradouros do Cliente #{logradouroBean.clienteDTO.getNome()}">
         <p:commandButton value="Novo Logradouro" icon="pi pi-plus"
                          onclick="PF('dlgLogradouro').show(); return false;" />
 
-        <p:dataTable value="#{logradouroBean.logradouros}" var="log">
+        <p:dataTable id="logradouroTable" value="#{logradouroBean.logradouros}" var="log" rowKey="#{log.id}">
             <p:column headerText="Endereço">#{log.endereco}</p:column>
             <p:column headerText="Cidade">#{log.cidade}</p:column>
             <p:column headerText="UF">#{log.uf}</p:column>

@@ -1,6 +1,7 @@
 package com.teste_tecnico.clienteapi.controllers;
 
 import com.teste_tecnico.clienteapi.DTOs.LogradouroDTO;
+import com.teste_tecnico.clienteapi.DTOs.LogradouroRequestDTO;
 import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.services.LogradouroService;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class LogradouroController {
 
     @PostMapping("/cliente/{idCliente}")
     public ResponseEntity<String> adicionarLogradouro(@PathVariable Long idCliente,
-                                                      @RequestBody @Valid LogradouroDTO dto) {
+                                                      @RequestBody @Valid LogradouroRequestDTO dto) {
         Cliente cliente = logradouroService.addLagradouro(idCliente, dto);
         return ResponseEntity.ok("Logradouro adicionado ao cliente ID: " + cliente.getId());
     }
@@ -34,7 +35,7 @@ public class LogradouroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<LogradouroDTO> atualizarLogradouro(@PathVariable Long id,
-                                                             @RequestBody @Valid LogradouroDTO dto) {
+                                                             @RequestBody @Valid LogradouroRequestDTO dto) {
         return ResponseEntity.ok(logradouroService.atualizar(id, dto));
     }
 

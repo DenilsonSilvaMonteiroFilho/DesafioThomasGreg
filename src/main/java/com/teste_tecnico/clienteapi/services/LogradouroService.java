@@ -1,6 +1,7 @@
 package com.teste_tecnico.clienteapi.services;
 
 import com.teste_tecnico.clienteapi.DTOs.LogradouroDTO;
+import com.teste_tecnico.clienteapi.DTOs.LogradouroRequestDTO;
 import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.entities.Logradouro;
 import com.teste_tecnico.clienteapi.repositories.ClienteRepository;
@@ -22,7 +23,7 @@ public class LogradouroService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente addLagradouro(Long idCliente,LogradouroDTO dto) {
+    public Cliente addLagradouro(Long idCliente, LogradouroRequestDTO dto) {
         Cliente cliente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new NoSuchElementException("Cliente não encontrado"));
 
@@ -42,7 +43,7 @@ public class LogradouroService {
                 .collect(Collectors.toList());
     }
 
-    public LogradouroDTO atualizar(Long id, LogradouroDTO dto) {
+    public LogradouroDTO atualizar(Long id, LogradouroRequestDTO dto) {
         Logradouro logradouro = logradouroRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Logradouro não encontrado"));
 

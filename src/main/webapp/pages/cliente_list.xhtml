@@ -32,8 +32,8 @@
 
                     <!-- Botão Logradouros -->
                     <p:commandButton value="Logradouros"
-                                     action="logradouro.xhtml?faces-redirect=true">
-                        <f:setPropertyActionListener target="#{logradouroBean.clienteId}" value="#{cliente.id}"/>
+                                     action="#{clienteBean.redirecionarParaLogradouros(cliente.id)}"
+                                     ajax="false">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>

@@ -1,24 +1,20 @@
 package com.teste_tecnico.clienteapi.managedBeans;
 
+import com.teste_tecnico.clienteapi.DTOs.ClienteDTO;
 import com.teste_tecnico.clienteapi.DTOs.LogradouroRequestDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
 import javax.faces.view.ViewScoped;
-
 import com.teste_tecnico.clienteapi.DTOs.LogradouroDTO;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,21 +26,34 @@ public class LogradouroBean implements Serializable {
     private final RestTemplate restTemplate = new RestTemplate();
 
     private Long clienteId;
+
+    private ClienteDTO clienteDTO;
     private List<LogradouroDTO> logradouros;
     private LogradouroRequestDTO novoLogradouro = new LogradouroRequestDTO();
+    private Long logradouroIdAlterar;
+    private LogradouroRequestDTO alterarLogradouro = new LogradouroRequestDTO();
+    private Long logradouroIdExcluir;
+
     @PostConstruct
     public void init() {
-        if (clienteId != null) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        String clienteIdParam = context.getExternalContext().getRequestParameterMap().get("clienteId");
+        if (clienteIdParam != null) {
+            this.clienteId = Long.parseLong(clienteIdParam);
             carregarLogradouros();
         }
     }
 
     public void carregarLogradouros() {
         try {
-            String url = API_URL + "/cliente/" + clienteId; // Exemplo: /api/logradouro/cliente/1
+            //Deve ter uma fomar melhor de so pegar o nome do cliente, ou passar os dados do cliente para essa tela
+            String urlCliente = "http://localhost:8080/api/clientes/" + clienteId;
+            String url = API_URL + "/cliente/" + clienteId;
+            ResponseEntity<ClienteDTO> responseCleinte = restTemplate.getForEntity(urlCliente, ClienteDTO.class);
             ResponseEntity<LogradouroDTO[]> response = restTemplate.getForEntity(url, LogradouroDTO[].class);
             logradouros = Arrays.asList(response.getBody());
-        }catch(Exception e) {
+            clienteDTO = responseCleinte.getBody();
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao carregar logradouros", e.getMessage()));
         }
@@ -71,15 +80,12 @@ public class LogradouroBean implements Serializable {
         }
     }
 
-    // Getters e Setters
-
     public Long getClienteId() {
         return clienteId;
     }
 
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
-        carregarLogradouros();
     }
 
     public List<LogradouroDTO> getLogradouros() {
@@ -92,5 +98,43 @@ public class LogradouroBean implements Serializable {
 
     public void setNovoLogradouro(LogradouroRequestDTO novoLogradouro) {
         this.novoLogradouro = novoLogradouro;
+    }
+
+    public void setLogradouros(List<LogradouroDTO> logradouros) {
+        this.logradouros = logradouros;
+    }
+
+    public Long getLogradouroIdAlterar() {
+        return logradouroIdAlterar;
+    }
+
+    public void setLogradouroIdAlterar(Long logradouroIdAlterar) {
+        this.logradouroIdAlterar = logradouroIdAlterar;
+    }
+
+    public LogradouroRequestDTO getAlterarLogradouro() {
+        return alterarLogradouro;
+    }
+
+    public void setAlterarLogradouro(LogradouroDTO logradouroAlterar) {
+        this.alterarLogradouro.setCidade(logradouroAlterar.getCidade());
+        this.alterarLogradouro.setEndereco(logradouroAlterar.getEndereco());
+        this.alterarLogradouro.setUf(logradouroAlterar.getUf());
+    }
+
+    public Long getLogradouroIdExcluir() {
+        return logradouroIdExcluir;
+    }
+
+    public void setLogradouroIdExcluir(Long logradouroIdExcluir) {
+        this.logradouroIdExcluir = logradouroIdExcluir;
+    }
+
+    public ClienteDTO getClienteDTO() {
+        return clienteDTO;
+    }
+
+    public void setClienteDTO(ClienteDTO clienteDTO) {
+        this.clienteDTO = clienteDTO;
     }
 }

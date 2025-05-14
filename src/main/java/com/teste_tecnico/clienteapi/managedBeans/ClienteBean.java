@@ -20,7 +20,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.Part;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -157,6 +156,10 @@ public class ClienteBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao alterar dados do cliente."));
         }
+    }
+
+    public String redirecionarParaLogradouros(Long clienteId) {
+        return "logradouro.xhtml?faces-redirect=true&amp;clienteId=" + clienteId;
     }
 
     public List<ClienteDTO> getClientes() { return clientes; }
