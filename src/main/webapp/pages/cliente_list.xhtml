@@ -38,17 +38,18 @@
                 </p:column>
             </p:dataTable>
         </p:panel>
-
-        <!-- Diálogo de Confirmacao -->
-        <p:confirmDialog widgetVar="confirmDialogExcluir" header="ConfirmacaoExcluir" message="Deseja excluir este cliente?"
-                         severity="warn" showEffect="fade" hideEffect="fade">
-            <p:commandButton value="Sim" icon="pi pi-check"
-                             action="#{clienteBean.excluir(clienteBean.clienteIdParaExcluir)}"
-                             update="form" oncomplete="PF('confirmDialogExcluir').hide();" />
-            <p:commandButton value="Não" icon="pi pi-times"
-                             onclick="PF('confirmDialog').hide();" type="button"/>
-        </p:confirmDialog>
     </h:form>
+
+    <!-- Diálogo de Confirmacao -->
+    <p:confirmDialog widgetVar="confirmDialogExcluir" header="ConfirmacaoExcluir" message="Deseja excluir este cliente?"
+                     severity="warn" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Sim" icon="pi pi-check"
+                         action="#{clienteBean.excluir(clienteBean.clienteIdParaExcluir)}"
+                         update="form" oncomplete="PF('confirmDialogExcluir').hide();" />
+        <p:commandButton value="Não" icon="pi pi-times"
+                         onclick="PF('confirmDialogExcluir').hide();" type="button"/>
+    </p:confirmDialog>
+
     <!-- Diálogo de Alterar Dados Cliente -->
     <p:dialog header="Editar Cliente" widgetVar="editDialog" modal="true" resizable="false" draggable="false">
         <h:form id="editForm">
@@ -58,8 +59,6 @@
 
                 <p:outputLabel for="email" value="Email:" />
                 <p:inputText id="email" value="#{clienteBean.clienteAlterarDados.email}" required="true"/>
-
-                <!-- Adicione outros campos conforme sua entidade -->
             </p:panelGrid>
 
             <p:commandButton value="Salvar"

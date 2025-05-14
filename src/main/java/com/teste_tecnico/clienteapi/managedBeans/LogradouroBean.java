@@ -61,16 +61,16 @@ public class LogradouroBean implements Serializable {
 
     public void salvar() {
         try {
-            //novoLogradouro.setClienteId(clienteId);
-
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            String url = API_URL + "/cliente/" + clienteId;
+
             HttpEntity<LogradouroRequestDTO> request = new HttpEntity<>(novoLogradouro, headers);
 
-            restTemplate.postForEntity(API_URL, request, Void.class);
+            restTemplate.postForEntity(url, request, Void.class);
 
-            carregarLogradouros(); // recarrega a lista após salvar
-            novoLogradouro = new LogradouroRequestDTO(); // limpa formulário
+            carregarLogradouros(); // recarrega a lista apos salvar
+            novoLogradouro = new LogradouroRequestDTO(); // limpa formulario
 
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Logradouro salvo com sucesso"));

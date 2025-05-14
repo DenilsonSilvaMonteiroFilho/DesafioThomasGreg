@@ -4,44 +4,46 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-    <title>Logradouros</title>
-</h:head>
-<h:form>
-    <p:panel header="Logradouros do Cliente #{logradouroBean.clienteDTO.getNome()}">
-        <p:commandButton value="Novo Logradouro" icon="pi pi-plus"
-                         onclick="PF('dlgLogradouro').show(); return false;" />
+    <h:head>
+        <title>Logradouros</title>
+    </h:head>
+    <h:form id="formPrincipal">
+        <p:panel id="painelPrincipal" header="Logradouros do Cliente #{logradouroBean.clienteDTO.getNome()}">
+            <p:commandButton value="Novo Logradouro" icon="pi pi-plus"
+                             onclick="PF('dlgLogradouro').show(); return false;" />
 
-        <p:dataTable id="logradouroTable" value="#{logradouroBean.logradouros}" var="log" rowKey="#{log.id}">
-            <p:column headerText="Endereço">#{log.endereco}</p:column>
-            <p:column headerText="Cidade">#{log.cidade}</p:column>
-            <p:column headerText="UF">#{log.uf}</p:column>
-            <p:column headerText="Ações">
-                <p:commandButton icon="pi pi-pencil" />
-                <p:commandButton icon="pi pi-trash" />
-            </p:column>
-        </p:dataTable>
-    </p:panel>
-</h:form>
+            <p:dataTable id="logradouroTable" value="#{logradouroBean.logradouros}" var="log" rowKey="#{log.id}">
+                <p:column headerText="Endereço">#{log.endereco}</p:column>
+                <p:column headerText="Cidade">#{log.cidade}</p:column>
+                <p:column headerText="UF">#{log.uf}</p:column>
+                <p:column headerText="Ações">
+                    <!-- Botao Editar -->
+                    <p:commandButton icon="pi pi-pencil" />
+                    <!-- Botao Excluir -->
+                    <p:commandButton icon="pi pi-trash" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
 
-        <!-- Diálogo para cadastro -->
-<p:dialog header="Novo Logradouro" widgetVar="dlgLogradouro" modal="true" closable="true">
-<h:form>
-    <p:panelGrid columns="2">
-        <p:outputLabel value="Endereço"/>
-        <p:inputText value="#{logradouroBean.novoLogradouro.endereco}" />
+            <!-- Diálogo para cadastro -->
+    <p:dialog header="Novo Logradouro" widgetVar="dlgLogradouro" modal="true" closable="true">
+        <h:form id="formDialog">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Endereço"/>
+                <p:inputText value="#{logradouroBean.novoLogradouro.endereco}" />
 
-        <p:outputLabel value="Cidade"/>
-        <p:inputText value="#{logradouroBean.novoLogradouro.cidade}" />
+                <p:outputLabel value="Cidade"/>
+                <p:inputText value="#{logradouroBean.novoLogradouro.cidade}" />
 
-        <p:outputLabel value="UF"/>
-        <p:inputText value="#{logradouroBean.novoLogradouro.uf}" />
-    </p:panelGrid>
+                <p:outputLabel value="UF"/>
+                <p:inputText value="#{logradouroBean.novoLogradouro.uf}" />
+            </p:panelGrid>
 
-    <p:commandButton value="Salvar"
-                     action="#{logradouroBean.salvar}"
-                     update="@form"
-                     oncomplete="PF('dlgLogradouro').hide();"/>
-</h:form>
-</p:dialog>
+            <p:commandButton value="Salvar"
+                             action="#{logradouroBean.salvar}"
+                             update=":formPrincipal:painelPrincipal :formDialog"
+                             oncomplete="PF('dlgLogradouro').hide();"/>
+        </h:form>
+    </p:dialog>
 </html>

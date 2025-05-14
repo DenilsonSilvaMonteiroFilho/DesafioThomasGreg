@@ -51,7 +51,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     public ResponseEntity alterarDadosCliente(@PathVariable Long id,
-                                         @RequestBody ClienteRequestDTO clienteRequestDTO){
+                                         @RequestBody @Valid ClienteRequestDTO clienteRequestDTO){
         return clienteService.alterarDados(id, clienteRequestDTO);
     }
 
