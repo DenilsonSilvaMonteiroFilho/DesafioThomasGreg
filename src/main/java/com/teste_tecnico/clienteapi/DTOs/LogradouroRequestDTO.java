@@ -29,4 +29,5 @@ public class LogradouroRequestDTO {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
 }

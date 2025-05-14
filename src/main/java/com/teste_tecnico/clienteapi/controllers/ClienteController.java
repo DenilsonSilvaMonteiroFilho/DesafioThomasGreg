@@ -38,7 +38,7 @@ public class ClienteController {
             @RequestPart("logotipo") MultipartFile logotipo) {
 
         try {
-            Cliente cliente = clienteService.criarCliente(dto, logotipo);
+            ClienteDTO cliente = clienteService.criarCliente(dto, logotipo);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente criado com ID: " + cliente.getId());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

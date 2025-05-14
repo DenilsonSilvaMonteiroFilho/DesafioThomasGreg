@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Lista de Clientes</title>
+</h:head>
+<h:body>
+    <h:form id="form">
+        <p:panel header="Clientes">
+            <p:messages/>
+            <p:dataTable value="#{clienteBean.clientes}" var="cliente" rowKey="#{cliente.id}">.
+                <p:column headerText="Nome">#{cliente.nome}</p:column>
+                <p:column headerText="Email">#{cliente.email}</p:column>
+                <p:column headerText="Ações">
+                    <!-- Botão Editar -->
+                    <p:commandButton icon="pi pi-pencil"
+                                     title="Editar"
+                                     update=":editForm"
+                                     oncomplete="PF('editDialog').show()"
+                                     actionListener="#{clienteController.prepararEdicao(cliente)}"
+                                     process="@this"/>
+
+                    <!-- Botão Excluir com confirmação -->
+                    <p:commandButton icon="pi pi-trash"
+                                     onclick="PF('confirmDialogExcluir').show();"
+                                     process="@this" update="@this">
+                        <f:setPropertyActionListener target="#{clienteBean.clienteIdParaExcluir}" value="#{cliente.id}"/>
+                    </p:commandButton>
+
+                    <!-- Botão Logradouros -->
+                    <p:commandButton value="Logradouros"
+                                     action="logradouro.xhtml?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{logradouroBean.clienteId}" value="#{cliente.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+
+        <!-- Diálogo de Confirmacao -->
+        <p:confirmDialog widgetVar="confirmDialogExcluir" header="ConfirmacaoExcluir" message="Deseja excluir este cliente?"
+                         severity="warn" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Sim" icon="pi pi-check"
+                             action="#{clienteBean.excluir(clienteBean.clienteIdParaExcluir)}"
+                             update="form" oncomplete="PF('confirmDialog').hide();" />
+            <p:commandButton value="Não" icon="pi pi-times"
+                             onclick="PF('confirmDialog').hide();" type="button"/>
+        </p:confirmDialog>
+
+        <p:dialog header="Editar Cliente" widgetVar="editDialog" modal="true" resizable="false" draggable="false">
+            <h:form id="editForm">
+                <p:panelGrid columns="2" styleClass="ui-noborder">
+                    <p:outputLabel for="nome" value="Nome:" />
+                    <p:inputText id="nome" value="#{clienteController.clienteSelecionado.nome}" required="true"/>
+
+                    <p:outputLabel for="email" value="Email:" />
+                    <p:inputText id="email" value="#{clienteController.clienteSelecionado.email}" required="true"/>
+
+                    <!-- Adicione outros campos conforme sua entidade -->
+                </p:panelGrid>
+
+                <p:commandButton value="Salvar"
+                                 actionListener="#{clienteController.salvarEdicao}"
+                                 update=":form:clienteTable, :editForm"
+                                 oncomplete="PF('editDialog').hide()"/>
+            </h:form>
+        </p:dialog>
+
+
+    </h:form>
+</h:body>
+</html>

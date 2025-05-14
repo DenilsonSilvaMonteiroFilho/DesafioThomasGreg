@@ -4,7 +4,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Novo Cliente</title>
+    <title>Cadastro Cliente</title>
 </h:head>
 <h:body>
     <h:form enctype="multipart/form-data">
@@ -18,7 +18,7 @@
             <p:inputText id="email" value="#{clienteBean.novoCliente.email}" required="true" />
 
             <p:outputLabel for="logo" value="Logotipo:" />
-            <p:fileUpload id="logo" value="#{clienteBean.logotipo}" mode="simple" />
+            <p:fileUpload id="logo" value="#{clienteBean.logotipo}" mode="simple" auto="true"/>
 
             <p:commandButton value="Salvar" action="#{clienteBean.salvar}" ajax="false" />
         </p:panel>

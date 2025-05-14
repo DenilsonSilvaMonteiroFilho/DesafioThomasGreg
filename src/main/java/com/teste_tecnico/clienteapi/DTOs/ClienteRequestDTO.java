@@ -26,5 +26,21 @@ public class ClienteRequestDTO {
     public MultipartFile getLogotipo() {
         return logotipo;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setLogradouros(List<LogradouroDTO> logradouros) {
+        this.logradouros = logradouros;
+    }
+
+    public void setLogotipo(MultipartFile logotipo) {
+        this.logotipo = logotipo;
+    }
 }
 

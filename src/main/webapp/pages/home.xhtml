@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Sistema de Clientes</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Cadastro de Cliente" outcome="cliente_form.xhtml" icon="pi pi-user-plus"/>
+            <p:menuitem value="Listar Clientes" outcome="cliente_list.xhtml" icon="pi pi-users"/>
+        </p:menubar>
+    </h:form>
+
+    <h:panelGroup layout="block">
+        <ui:insert name="conteudo"/>
+    </h:panelGroup>
+</h:body>
+</html>

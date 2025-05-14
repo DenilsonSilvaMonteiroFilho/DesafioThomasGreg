@@ -27,7 +27,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente criarCliente(ClienteRequestDTO dto, MultipartFile logotipo) throws IOException {
+    public ClienteDTO criarCliente(ClienteRequestDTO dto, MultipartFile logotipo) throws IOException {
         Cliente existente = clienteRepository.findByEmail(dto.getEmail());
         if (existente!=null) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
@@ -40,21 +40,21 @@ public class ClienteService {
         if (logotipo != null && !logotipo.isEmpty()) {
             cliente.setLogotipo(logotipo.getBytes());
         }
+        if(cliente.getLogradouros()!=null&&!cliente.getLogradouros().isEmpty()) {
+            List<Logradouro> logradouros = dto.getLogradouros().stream()
+                    .map(logradouroDTO -> {
+                        Logradouro logradouro = new Logradouro();
+                        logradouro.setEndereco(logradouroDTO.getEndereco());
+                        logradouro.setCidade(logradouroDTO.getCidade());
+                        logradouro.setUf(logradouroDTO.getUf());
+                        logradouro.setCliente(cliente);
+                        return logradouro;
+                    })
+                    .collect(Collectors.toList());
+            cliente.setLogradouros(logradouros);
+        }
 
-        List<Logradouro> logradouros = dto.getLogradouros().stream()
-                .map(logradouroDTO -> {
-                    Logradouro logradouro = new Logradouro();
-                    logradouro.setEndereco(logradouroDTO.getEndereco());
-                    logradouro.setCidade(logradouroDTO.getCidade());
-                    logradouro.setUf(logradouroDTO.getUf());
-                    logradouro.setCliente(cliente);
-                    return logradouro;
-                })
-                .collect(Collectors.toList());
-
-        cliente.setLogradouros(logradouros);
-
-        return clienteRepository.save(cliente);
+        return toDTO(clienteRepository.save(cliente));
     }
 
     public List<ClienteDTO> listarClientes() {

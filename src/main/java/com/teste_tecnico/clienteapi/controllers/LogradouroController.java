@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/logradouros")
+@RequestMapping("/api/logradouro")
 @CrossOrigin(origins = "*")
 public class LogradouroController {
 
