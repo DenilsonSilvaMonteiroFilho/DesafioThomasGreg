@@ -5,6 +5,8 @@ import com.teste_tecnico.clienteapi.DTOs.ClienteRequestDTO;
 import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.entities.Logradouro;
 import com.teste_tecnico.clienteapi.repositories.ClienteRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,6 +57,16 @@ public class ClienteService {
         }
 
         return toDTO(clienteRepository.save(cliente));
+    }
+
+    @Transactional
+    public ResponseEntity alterarDados(Long idCliente,ClienteRequestDTO clienteRequestDTO){
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new NoSuchElementException("Cliente não encontrado"));
+        cliente.setNome(clienteRequestDTO.getNome());
+        cliente.setEmail(clienteRequestDTO.getEmail());
+
+        return ResponseEntity.status(HttpStatus.OK).body(toDTO(clienteRepository.save(cliente)));
     }
 
     public List<ClienteDTO> listarClientes() {

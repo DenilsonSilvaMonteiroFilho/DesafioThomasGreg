@@ -32,8 +32,10 @@ public class ClienteBean implements Serializable {
     private List<ClienteDTO> clientes;
     private ClienteRequestDTO novoCliente = new ClienteRequestDTO();
     private UploadedFile logotipo;
-
     private Long clienteIdParaExcluir;
+    private ClienteRequestDTO clienteAlterarDados = new ClienteRequestDTO();
+    private Long clienteIdParaAlterar;
+
 
 
     private final String API_URL = "http://localhost:8080/api/clientes";
@@ -114,7 +116,7 @@ public class ClienteBean implements Serializable {
 
             restTemplate.delete(url);
 
-            // Atualiza lista após exclusão (se necessário)
+            // Atualiza lista após exclusão
             carregarClientes();
 
             FacesContext.getCurrentInstance().addMessage(null,
@@ -129,6 +131,33 @@ public class ClienteBean implements Serializable {
         }
     }
 
+    public void alterar(Long id){
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String url = API_URL + "/" + id;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Cria o corpo da requisição com os dados atualizados (nome e email)
+            HttpEntity<ClienteRequestDTO> requestEntity = new HttpEntity<>(clienteAlterarDados, headers);
+
+            restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Dados do cliente alterados com sucesso!"));
+
+            carregarClientes(); // Atualiza a lista
+
+        } catch (HttpClientErrorException.NotFound e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Cliente não encontrado."));
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao alterar dados do cliente."));
+        }
+    }
 
     public List<ClienteDTO> getClientes() { return clientes; }
     public ClienteRequestDTO getNovoCliente() { return novoCliente; }
@@ -140,6 +169,27 @@ public class ClienteBean implements Serializable {
     }
     public void setClienteIdParaExcluir(Long clienteIdParaExcluir) {
         this.clienteIdParaExcluir = clienteIdParaExcluir;
+    }
+
+    public void setClientes(List<ClienteDTO> clientes) {
+        this.clientes = clientes;
+    }
+
+    public ClienteRequestDTO getClienteAlterarDados() {
+        return clienteAlterarDados;
+    }
+
+    public void setClienteAlterarDados(ClienteDTO clienteAlterarDados) {
+        this.clienteAlterarDados.setNome(clienteAlterarDados.getNome());
+        this.clienteAlterarDados.setEmail(clienteAlterarDados.getEmail());
+    }
+
+    public Long getClienteIdParaAlterar() {
+        return clienteIdParaAlterar;
+    }
+
+    public void setClienteIdParaAlterar(Long clienteIdParaAlterar) {
+        this.clienteIdParaAlterar = clienteIdParaAlterar;
     }
 }
 

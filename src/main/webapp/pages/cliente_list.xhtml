@@ -11,17 +11,17 @@
     <h:form id="form">
         <p:panel header="Clientes">
             <p:messages/>
-            <p:dataTable value="#{clienteBean.clientes}" var="cliente" rowKey="#{cliente.id}">.
+            <p:dataTable id="clienteTable" value="#{clienteBean.clientes}" var="cliente" rowKey="#{cliente.id}">
                 <p:column headerText="Nome">#{cliente.nome}</p:column>
                 <p:column headerText="Email">#{cliente.email}</p:column>
                 <p:column headerText="Ações">
                     <!-- Botão Editar -->
                     <p:commandButton icon="pi pi-pencil"
-                                     title="Editar"
+                                     actionListener="#{clienteBean.setClienteAlterarDados(cliente)}"
                                      update=":editForm"
-                                     oncomplete="PF('editDialog').show()"
-                                     actionListener="#{clienteController.prepararEdicao(cliente)}"
-                                     process="@this"/>
+                                     oncomplete="PF('editDialog').show()">
+                    <f:setPropertyActionListener target="#{clienteBean.clienteIdParaAlterar}" value="#{cliente.id}"/>
+                    </p:commandButton>
 
                     <!-- Botão Excluir com confirmação -->
                     <p:commandButton icon="pi pi-trash"
@@ -44,31 +44,29 @@
                          severity="warn" showEffect="fade" hideEffect="fade">
             <p:commandButton value="Sim" icon="pi pi-check"
                              action="#{clienteBean.excluir(clienteBean.clienteIdParaExcluir)}"
-                             update="form" oncomplete="PF('confirmDialog').hide();" />
+                             update="form" oncomplete="PF('confirmDialogExcluir').hide();" />
             <p:commandButton value="Não" icon="pi pi-times"
                              onclick="PF('confirmDialog').hide();" type="button"/>
         </p:confirmDialog>
-
-        <p:dialog header="Editar Cliente" widgetVar="editDialog" modal="true" resizable="false" draggable="false">
-            <h:form id="editForm">
-                <p:panelGrid columns="2" styleClass="ui-noborder">
-                    <p:outputLabel for="nome" value="Nome:" />
-                    <p:inputText id="nome" value="#{clienteController.clienteSelecionado.nome}" required="true"/>
-
-                    <p:outputLabel for="email" value="Email:" />
-                    <p:inputText id="email" value="#{clienteController.clienteSelecionado.email}" required="true"/>
-
-                    <!-- Adicione outros campos conforme sua entidade -->
-                </p:panelGrid>
-
-                <p:commandButton value="Salvar"
-                                 actionListener="#{clienteController.salvarEdicao}"
-                                 update=":form:clienteTable, :editForm"
-                                 oncomplete="PF('editDialog').hide()"/>
-            </h:form>
-        </p:dialog>
-
-
     </h:form>
+    <!-- Diálogo de Alterar Dados Cliente -->
+    <p:dialog header="Editar Cliente" widgetVar="editDialog" modal="true" resizable="false" draggable="false">
+        <h:form id="editForm">
+            <p:panelGrid columns="2" styleClass="ui-noborder">
+                <p:outputLabel for="nome" value="Nome:" />
+                <p:inputText id="nome" value="#{clienteBean.clienteAlterarDados.nome}" required="true"/>
+
+                <p:outputLabel for="email" value="Email:" />
+                <p:inputText id="email" value="#{clienteBean.clienteAlterarDados.email}" required="true"/>
+
+                <!-- Adicione outros campos conforme sua entidade -->
+            </p:panelGrid>
+
+            <p:commandButton value="Salvar"
+                             actionListener="#{clienteBean.alterar(clienteBean.clienteIdParaAlterar)}"
+                             update=":form:clienteTable, editForm"
+                             oncomplete="PF('editDialog').hide()"/>
+        </h:form>
+    </p:dialog>
 </h:body>
 </html>
