@@ -1,7 +1,6 @@
 package com.teste_tecnico.clienteapi.DTOs;
 
 public class LogradouroDTO {
-
     private Long id;
     private String endereco;
     private String cidade;

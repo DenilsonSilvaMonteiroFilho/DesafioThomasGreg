@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import javax.faces.view.ViewScoped;
 import com.teste_tecnico.clienteapi.DTOs.LogradouroDTO;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -77,6 +78,48 @@ public class LogradouroBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao salvar", e.getMessage()));
+        }
+    }
+
+    public void excluir(Long id) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String url = API_URL + "/" + id;
+
+            restTemplate.delete(url);
+
+            // Atualiza lista após exclusão
+            carregarLogradouros();
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Logradouro excluído com sucesso!"));
+        } catch (HttpClientErrorException.NotFound e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Logradouro não encontrado."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Erro ao excluir logradouro."));
+            e.printStackTrace();
+        }
+    }
+
+    public void alterar(Long id) {
+        try {
+            String url = API_URL + "/" + id;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<LogradouroRequestDTO> request = new HttpEntity<>(alterarLogradouro, headers);
+
+            restTemplate.put(url, request);
+            carregarLogradouros();
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Logradouro alterado com sucesso"));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao alterar", e.getMessage()));
         }
     }
 

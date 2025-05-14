@@ -17,18 +17,27 @@
                 <p:column headerText="Cidade">#{log.cidade}</p:column>
                 <p:column headerText="UF">#{log.uf}</p:column>
                 <p:column headerText="Ações">
-                    <!-- Botao Editar -->
-                    <p:commandButton icon="pi pi-pencil" />
-                    <!-- Botao Excluir -->
-                    <p:commandButton icon="pi pi-trash" />
+                    <!-- Botão Editar -->
+                    <p:commandButton icon="pi pi-pencil"
+                                     actionListener="#{logradouroBean.setAlterarLogradouro(log)}"
+                                     onclick="PF('dlgAlterar').show();"
+                                     process="@this" update=":formAlterar">
+                    <f:setPropertyActionListener target="#{logradouroBean.logradouroIdAlterar}" value="#{log.id}"/>
+                    </p:commandButton>
+                    <!-- Botão Excluir -->
+                    <p:commandButton icon="pi pi-trash"
+                                    onclick="PF('dlgExcluir').show();"
+                                    process="@this" update="@this">
+                    <f:setPropertyActionListener target="#{logradouroBean.logradouroIdExcluir}" value="#{log.id}"/>
+                </p:commandButton>
                 </p:column>
             </p:dataTable>
         </p:panel>
     </h:form>
 
-            <!-- Diálogo para cadastro -->
+    <!-- Dialogo para cadastro -->
     <p:dialog header="Novo Logradouro" widgetVar="dlgLogradouro" modal="true" closable="true">
-        <h:form id="formDialog">
+        <h:form id="formCadastro">
             <p:panelGrid columns="2">
                 <p:outputLabel value="Endereço"/>
                 <p:inputText value="#{logradouroBean.novoLogradouro.endereco}" />
@@ -42,8 +51,39 @@
 
             <p:commandButton value="Salvar"
                              action="#{logradouroBean.salvar}"
-                             update=":formPrincipal:painelPrincipal :formDialog"
+                             update=":formPrincipal:painelPrincipal :formCadastro"
                              oncomplete="PF('dlgLogradouro').hide();"/>
         </h:form>
     </p:dialog>
+
+    <!-- Dialogo para Alteracao -->
+    <p:dialog header="Alterar Logradouro" widgetVar="dlgAlterar" modal="true" closable="true" resizable="false" draggable="false">
+        <h:form id="formAlterar">
+            <p:panelGrid columns="2" styleClass="ui-noborder">
+                <p:outputLabel for="endereco" value="Endereco"/>
+                <p:inputText id="endereco" value="#{logradouroBean.alterarLogradouro.endereco}" required="true"/>
+
+                <p:outputLabel for="cidade" value="Cidade"/>
+                <p:inputText id="cidade" value="#{logradouroBean.alterarLogradouro.cidade}" required="true"/>
+
+                <p:outputLabel for="uf" value="UF"/>
+                <p:inputText id="uf" value="#{logradouroBean.alterarLogradouro.uf}" required="true"/>
+            </p:panelGrid>
+
+            <p:commandButton value="Salvar Alterações"
+                             action="#{logradouroBean.alterar(logradouroBean.logradouroIdAlterar)}"
+                             update=":formPrincipal :formAlterar"
+                             oncomplete="PF('dlgAlterar').hide();" />
+        </h:form>
+    </p:dialog>
+
+    <!-- Dialogo para Confirmar Exclusao -->
+    <p:confirmDialog widgetVar="dlgExcluir" header="Confirmar Exclusao" message="Deseja excluir este Logradouro?"
+                     severity="warn" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Sim" icon="pi pi-check"
+                         action="#{logradouroBean.excluir(logradouroBean.logradouroIdExcluir)}"
+                         update=":formPrincipal:painelPrincipal" oncomplete="PF('dlgExcluir').hide();" />
+        <p:commandButton value="Não" icon="pi pi-times"
+                         onclick="PF('dlgExcluir').hide();" type="button"/>
+    </p:confirmDialog>
 </html>

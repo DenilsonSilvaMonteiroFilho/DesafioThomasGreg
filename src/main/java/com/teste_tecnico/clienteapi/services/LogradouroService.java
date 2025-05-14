@@ -60,6 +60,7 @@ public class LogradouroService {
 
     public LogradouroDTO toDTO(Logradouro l) {
         LogradouroDTO dto = new LogradouroDTO();
+        dto.setId(l.getId());
         dto.setEndereco(l.getEndereco());
         dto.setCidade(l.getCidade());
         dto.setUf(l.getUf());
