@@ -1,6 +1,5 @@
 package com.teste_tecnico.clienteapi.DTOs;
 
-import com.teste_tecnico.clienteapi.autorizacao.Role;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -9,7 +8,6 @@ public class ClienteRequestDTO {
     private String nome;
     private String email;
     private List<LogradouroDTO> logradouros;
-    private Role role;
     private MultipartFile logotipo;
 
 
@@ -43,14 +41,6 @@ public class ClienteRequestDTO {
 
     public void setLogotipo(MultipartFile logotipo) {
         this.logotipo = logotipo;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
 

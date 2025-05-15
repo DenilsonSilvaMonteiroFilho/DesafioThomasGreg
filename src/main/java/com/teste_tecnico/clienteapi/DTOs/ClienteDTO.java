@@ -1,15 +1,12 @@
 package com.teste_tecnico.clienteapi.DTOs;
 
 
-import com.teste_tecnico.clienteapi.autorizacao.Role;
-
 import java.util.List;
 
 public class ClienteDTO {
     private Long id;
     private String nome;
     private String email;
-    private Role role;
     private List<LogradouroDTO> logradouros;
 
 
@@ -43,14 +40,6 @@ public class ClienteDTO {
 
     public void setLogradouros(List<LogradouroDTO> logradouros) {
         this.logradouros = logradouros;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
 
