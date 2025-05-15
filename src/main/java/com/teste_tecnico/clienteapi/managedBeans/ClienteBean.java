@@ -41,7 +41,6 @@ public class ClienteBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        carregarClientes();
     }
 
     public void carregarClientes() {

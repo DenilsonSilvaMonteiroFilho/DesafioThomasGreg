@@ -2,6 +2,7 @@ package com.teste_tecnico.clienteapi.services;
 
 import com.teste_tecnico.clienteapi.DTOs.ClienteDTO;
 import com.teste_tecnico.clienteapi.DTOs.ClienteRequestDTO;
+import com.teste_tecnico.clienteapi.autorizacao.Role;
 import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.entities.Logradouro;
 import com.teste_tecnico.clienteapi.repositories.ClienteRepository;
@@ -38,6 +39,7 @@ public class ClienteService {
         Cliente cliente = new Cliente();
         cliente.setNome(dto.getNome());
         cliente.setEmail(dto.getEmail());
+        cliente.setRole(Role.USER);
 
         if (logotipo != null && !logotipo.isEmpty()) {
             cliente.setLogotipo(logotipo.getBytes());

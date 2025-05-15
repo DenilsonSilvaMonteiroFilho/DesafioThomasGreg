@@ -2,7 +2,6 @@ package com.teste_tecnico.clienteapi.controllers;
 
 import com.teste_tecnico.clienteapi.DTOs.ClienteDTO;
 import com.teste_tecnico.clienteapi.DTOs.ClienteRequestDTO;
-import com.teste_tecnico.clienteapi.entities.Cliente;
 import com.teste_tecnico.clienteapi.services.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
