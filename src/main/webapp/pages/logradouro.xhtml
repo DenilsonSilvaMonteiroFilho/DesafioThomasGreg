@@ -8,6 +8,12 @@
         <title>Logradouros</title>
     </h:head>
     <h:form id="formPrincipal">
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="Cadastro de Cliente" outcome="cliente_form.xhtml" icon="pi pi-user-plus"/>
+                <p:menuitem value="Listar Clientes" outcome="cliente_list.xhtml" icon="pi pi-users"/>
+            </p:menubar>
+        </h:form>
         <p:panel id="painelPrincipal" header="Logradouros do Cliente #{logradouroBean.clienteDTO.getNome()}">
             <p:commandButton value="Novo Logradouro" icon="pi pi-plus"
                              onclick="PF('dlgLogradouro').show(); return false;" />

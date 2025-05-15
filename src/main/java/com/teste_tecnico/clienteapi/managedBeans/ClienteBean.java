@@ -41,7 +41,6 @@ public class ClienteBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        carregarClientes();
     }
 
     public void carregarClientes() {
@@ -116,6 +115,7 @@ public class ClienteBean implements Serializable {
             restTemplate.delete(url);
 
             // Atualiza lista após exclusão
+            init();
             carregarClientes();
 
             FacesContext.getCurrentInstance().addMessage(null,

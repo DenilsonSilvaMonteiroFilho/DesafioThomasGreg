@@ -7,7 +7,16 @@
 <h:head>
     <title>Lista de Clientes</title>
 </h:head>
+<f:metadata>
+    <f:event type="preRenderView" listener="#{clienteBean.carregarClientes}" />
+</f:metadata>
 <h:body>
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Cadastro de Cliente" outcome="cliente_form.xhtml" icon="pi pi-user-plus"/>
+            <p:menuitem value="Listar Clientes" outcome="cliente_list.xhtml" icon="pi pi-users"/>
+        </p:menubar>
+    </h:form>
     <h:form id="form">
         <p:panel header="Clientes">
             <p:messages/>
