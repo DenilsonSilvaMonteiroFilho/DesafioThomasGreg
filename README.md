@@ -37,6 +37,7 @@ java -jar target/clienteapi-0.0.1-SNAPSHOT.jar
 
 ----
 
+
 src
  └─ main
     ├─ java/com/.../clienteapi
@@ -48,6 +49,7 @@ src
     └─ resources
         ├─ application.properties
         └─ META-INF/resources → páginas JSF + PrimeFaces
+
 
 | Tema                          | Decisão                                                                                                                               |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
